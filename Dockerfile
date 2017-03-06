@@ -2,6 +2,13 @@ FROM ubuntu:zesty
 
 MAINTAINER Andreas Schaeffer
 
+ENV JENKINS_HOME /var/lib/jenkins
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=116
+ARG gid=125
+
 RUN dpkg --add-architecture i386 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get update \
@@ -15,14 +22,12 @@ RUN dpkg --add-architecture i386 \
     && python get-pip.py \
     && pip install -U pip \
     && pip install conan \
-    && groupadd 1001 -g 1001 \
-    && groupadd 1000 -g 1000 \
-    && useradd -ms /bin/bash jenkins -g 1001 -G 1000 \
+    && groupadd ${gid} ${group} \
+    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -ms /bin/bash ${user} \
     && echo "jenkins:jenkins" | chpasswd \
     && adduser jenkins sudo \
     && echo "jenkins ALL= NOPASSWD: ALL\n" >> /etc/sudoers
 
-USER jenkins
+USER ${user}
 WORKDIR /var/lib/jenkins
-RUN mkdir -p /var/lib/jenkins/.conan
 
