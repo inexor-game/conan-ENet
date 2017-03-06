@@ -2,8 +2,11 @@ node("master") {
 
   docker.image('lasote/conangcc63').inside {
 
-    stage('Checkout project') {
+    stage('Build Settings') {
+	echo "\u2600 JOB=${env.JOB_NAME}"
+	echo "\u2600 BUILD_NUMBER=${env.BUILD_NUMBER}"
         echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+	echo "\u2600 workspace=${workspace}"
     }
 
     stage('Checkout project') {
