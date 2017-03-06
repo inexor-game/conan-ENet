@@ -16,7 +16,8 @@ node("master") {
   }
 
   stage('docker') {
-    docker.image('lasote/conangcc63').inside {
+    def environment  = docker.build('inexor-game/conangcc63')
+    environment.inside('--memory-swap=-1') {
 
       stage('Install and build dependencies') {
         dir('build') {
