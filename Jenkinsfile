@@ -1,5 +1,9 @@
 node("master") {
 
+  stage("Cleanup") {
+    deleteDir()
+  }
+
   stage('Build Settings') {
     echo "\u2600 JOB=${env.JOB_NAME}"
     echo "\u2600 BUILD_NUMBER=${env.BUILD_NUMBER}"
@@ -11,13 +15,13 @@ node("master") {
     checkout scm
   }
 
-  stage('Fetching enet sources') {
-    sh 'conan source'
-  }
-
   stage('docker') {
     def environment  = docker.build('inexor-game/conangcc63')
     environment.inside('--memory-swap=-1') {
+
+      stage('Fetching enet sources') {
+        sh 'conan source'
+      }
 
       stage('Install and build dependencies') {
         dir('build') {
@@ -34,6 +38,10 @@ node("master") {
       }
 
     }
+  }
+
+  stage("Cleanup") {
+    deleteDir()
   }
 
 }
