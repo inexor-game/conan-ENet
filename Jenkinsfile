@@ -1,4 +1,6 @@
-node { 
+node("master") {
+
+  docker.image('lasote/conangcc63').inside {
 
     stage('Checkout project') {
         checkout scm
@@ -22,5 +24,6 @@ node {
         }
     }
 
-}
+  }
 
+}
