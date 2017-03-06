@@ -3,6 +3,10 @@ node("master") {
   docker.image('lasote/conangcc63').inside {
 
     stage('Checkout project') {
+        echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+    }
+
+    stage('Checkout project') {
         checkout scm
     }
 
