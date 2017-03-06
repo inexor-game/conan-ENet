@@ -22,8 +22,8 @@ RUN dpkg --add-architecture i386 \
     && python get-pip.py \
     && pip install -U pip \
     && pip install conan \
-    && groupadd ${gid} ${group} \
-    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -ms /bin/bash ${user} \
+    && groupadd -g ${gid} ${group} \
+    && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user} \
     && echo "jenkins:jenkins" | chpasswd \
     && adduser jenkins sudo \
     && echo "jenkins ALL= NOPASSWD: ALL\n" >> /etc/sudoers
