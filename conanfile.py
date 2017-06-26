@@ -7,7 +7,7 @@ class ENetConan(ConanFile):
     options = {"shared": [True, False]}
     description = "Reliable UDP networking library"
     default_options = "shared=False"
-    url = "http://github.com/inexor-game/conan-ENet"
+    url = "http://github.com/inexorgame/conan-ENet"
     license = "MIT"
 
     def source(self):
