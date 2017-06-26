@@ -5,6 +5,7 @@ class ENetConan(ConanFile):
     version = "1.3.13"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
+    description = "Reliable UDP networking library"
     default_options = "shared=False"
     url = "http://github.com/inexor-game/conan-ENet"
     license = "MIT"
