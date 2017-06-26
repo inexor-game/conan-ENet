@@ -31,6 +31,7 @@ class ENetConan(ConanFile):
     def package(self):
         self.copy('*', dst='include', src='enet/include')
         self.copy("*.lib", dst="lib", src="", keep_path=False)
+        self.copy("*.pdb", dst="lib", src="", keep_path=False)
         self.copy("*.a", dst="lib", src="", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
