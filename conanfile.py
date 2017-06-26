@@ -9,12 +9,13 @@ class ENetConan(ConanFile):
     default_options = "shared=False"
     url = "http://github.com/inexorgame/conan-ENet"
     license = "MIT"
+    generators = "cmake"
 
     def source(self):
         self.run("git clone https://github.com/lsalzman/enet.git")
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
-        tools.replace_in_file("enet/CMakeLists.txt", "PROJECT(enet)", '''PROJECT(enet)
+        tools.replace_in_file("enet/CMakeLists.txt", "project(enet)", '''project(enet)
         include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
         conan_basic_setup()''')
         if self.options.shared == "True":
