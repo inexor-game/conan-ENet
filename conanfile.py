@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 
+
 class ENetConan(ConanFile):
     name = "ENet"
     version = "1.3.13"
@@ -13,6 +14,7 @@ class ENetConan(ConanFile):
 
     def source(self):
         self.run("git clone https://github.com/lsalzman/enet.git")
+        self.run("git checkout 39a72ab1990014eb399cee9d538fd529df99c6a0")
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
         tools.replace_in_file("enet/CMakeLists.txt", "project(enet)", '''project(enet)
@@ -22,10 +24,10 @@ class ENetConan(ConanFile):
             tools.replace_in_file("enet/CMakeLists.txt", "add_library(enet STATIC", "add_library(enet SHARED")
 
     def config(self):
-        del self.settings.compiler.libcxx # We are a pure C lib.
+        del self.settings.compiler.libcxx  # We are a pure C lib.
 
     def build(self):
-        cmake = CMake(self.settings)
+        cmake = CMake(self)
         self.run('cmake %s/enet %s' % (self.conanfile_directory, cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
